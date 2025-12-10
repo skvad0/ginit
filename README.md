@@ -20,16 +20,6 @@ ginit "C:\path\to\your\project"
 python ginit.py "C:\path\to\your\project"
 ```
 
-## Features
-
-- Clean, minimal CLI output
-- Automatic git initialization
-- Auto-generates `.gitignore`
-- Creates GitHub repository
-- License selection (MIT, Apache, GPL, BSD, ISC, Unlicense)
-- Pushes to main branch
-- Public/private repository option
-
 ## 📦 Project Structure
 
 ```
@@ -93,7 +83,3 @@ ginit
 ```powershell
 pip uninstall ginit-cli
 ```
-
-## License
-
-MIT License
