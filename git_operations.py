@@ -62,6 +62,23 @@ class GitOperations:
         return git_dir.exists()
     
     @staticmethod
+    def reset_repo_state(folder_path):
+        """
+        Reset repository to a clean state, removing any partial commits or staging.
+        
+        Args:
+            folder_path: Path to the repository
+            
+        Returns:
+            bool: True if successful
+        """
+        # Reset any staged changes
+        GitOperations.run_command(['git', 'reset', 'HEAD'], cwd=folder_path)
+        # Clean untracked files that might cause issues
+        GitOperations.run_command(['git', 'clean', '-fd'], cwd=folder_path)
+        return True
+    
+    @staticmethod
     def init_repo(folder_path):
         """
         Initialize a git repository in the specified folder.
@@ -157,8 +174,17 @@ Thumbs.db
         )
         
         if not success:
-            if "nothing to commit" in output:
-                return True
+            if "nothing to commit" in output or "working tree clean" in output:
+                # Check if there's at least one commit
+                has_commits, _ = GitOperations.run_command(
+                    ['git', 'rev-parse', 'HEAD'],
+                    cwd=folder_path
+                )
+                if has_commits:
+                    return True
+                # No commits at all, this is an error
+                print(f"No files to commit: {output}")
+                return False
             print(f"Failed to commit: {output}")
             return False
         

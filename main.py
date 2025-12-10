@@ -57,17 +57,20 @@ class GitHubAutomation:
         # Check if git is installed
         self.git_ops.check_git_installed()
         
+        # Create LICENSE file first (before git init) if specified
+        if license_key and license_key != 'None':
+            LicenseTemplates.create_license_file(folder_path, license_key, license_author)
+        
         # Check if already a git repo
-        if not self.git_ops.is_git_repo(folder_path):
+        if self.git_ops.is_git_repo(folder_path):
+            # Reset any failed state from previous attempts
+            self.git_ops.reset_repo_state(folder_path)
+        else:
             if not self.git_ops.init_repo(folder_path):
                 return False
         
         # Create .gitignore
         self.git_ops.create_gitignore(folder_path)
-        
-        # Create LICENSE file if specified
-        if license_key and license_key != 'None':
-            LicenseTemplates.create_license_file(folder_path, license_key, license_author)
         
         # Add and commit
         if not self.git_ops.add_all_files(folder_path):

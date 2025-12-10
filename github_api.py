@@ -45,25 +45,13 @@ class GitHubAPI:
         try:
             print("Creating GitHub repository...", end='', flush=True)
             
-            # Map license keys to GitHub's license templates
-            github_license_map = {
-                'MIT': 'mit',
-                'Apache-2.0': 'apache-2.0',
-                'GPL-3.0': 'gpl-3.0',
-                'BSD-3-Clause': 'bsd-3-clause',
-                'BSD-2-Clause': 'bsd-2-clause',
-                'ISC': 'isc',
-                'Unlicense': 'unlicense'
-            }
-            
-            license_template = github_license_map.get(license_key) if license_key and license_key != 'None' else None
-            
+            # Don't use GitHub's license template to avoid commit conflicts
+            # LICENSE file is created locally instead
             repo = self.user.create_repo(
                 name=repo_name,
                 description=description,
                 private=private,
-                auto_init=False,
-                license_template=license_template
+                auto_init=False
             )
             print(f"\rCreated repository: {repo_name}")
             return repo
