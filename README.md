@@ -20,20 +20,6 @@ ginit "C:\path\to\your\project"
 python ginit.py "C:\path\to\your\project"
 ```
 
-## 📦 Project Structure
-
-```
-ginit/
-├── ginit.py             # CLI entry point
-├── main.py              # Main workflow orchestration
-├── git_operations.py    # Git commands
-├── github_api.py        # GitHub API interactions
-├── config.py            # Configuration & user input
-├── licenses.py          # License templates
-├── setup.py             # Package installation
-└── requirements.txt     # Dependencies
-```
-
 ## Setup
 
 ### 1. Create a GitHub Token
